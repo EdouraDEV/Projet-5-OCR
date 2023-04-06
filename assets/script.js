@@ -21,19 +21,18 @@ const slides = [
 const leftArrow = document.querySelector(".arrow_left");
 const rightArrow = document.querySelector(".arrow_right");
 const dots = document.querySelector(".dots");
-const imgSlides = document.querySelector("#banner > img");
-const textSlides = document.querySelector("#banner > p");
+const slidesImg = document.querySelector("#banner > img");
+const slidesText = document.querySelector("#banner > p");
 let currentIndex = 0;
-const slide = slides[currentIndex];
 
-const switchSlide = (slide) => {
-  imgSlides.src = `./assets/images/slideshow/${slides.image}`;
-  textSlides.innerHTML = slides.tagLine;
+const switchSlide = () => {
+  slidesImg.src = `./assets/images/slideshow/${slides[currentIndex].image}`;
+  slidesText.innerHTML = slides[currentIndex].tagLine;
 };
 
 leftArrow.addEventListener("click", () => {
   //revenir sur backslide, modif aussi image + texte
-  const previousElement = dots.children.item(currentIndex);
+  const previousElement = dots.children.item(currentIndex); //dots[currentIndex]
   currentIndex--;
   if (currentIndex < 0) {
     currentIndex = slides.length - 1;
@@ -42,6 +41,7 @@ leftArrow.addEventListener("click", () => {
   const currentElement = dots.children.item(currentIndex);
   currentElement.classList.toggle("dot_selected");
   previousElement.classList.toggle("dot_selected");
+  switchSlide();
 });
 
 rightArrow.addEventListener("click", () => {
@@ -54,7 +54,7 @@ rightArrow.addEventListener("click", () => {
   currentElement.classList.toggle("dot_selected");
   previousElement.classList.toggle("dot_selected");
   //slide suivant avec changement d'img + text
-  switchSlide(slide);
+  switchSlide();
 });
 
 slides.forEach((slide, index) => {
