@@ -29,33 +29,32 @@ const switchSlide = () => {
   slidesImg.src = `./assets/images/slideshow/${slides[currentIndex].image}`;
   slidesText.innerHTML = slides[currentIndex].tagLine;
 };
-const toggleDot = () => {
-  const dotsList = Array.from(dots.children); // Convertir la liste des enfants de "dots" en tableau
-  dotsList.forEach((dot, index) => {
-    if (index === currentIndex) {
-      dot.classList.add("dot_selected");
-    } else {
-      dot.classList.remove("dot_selected");
-    }
-  });
+const toggleDot = (oldDot, newDot) => {
+  oldDot.classList.toggle("dot_selected");
+  newDot.classList.toggle("dot_selected");
 };
+
 leftArrow.addEventListener("click", () => {
   //revenir sur backslide, modif aussi image + texte
+  const previousElement = dots.children.item(currentIndex);
   currentIndex--;
   if (currentIndex < 0) {
     currentIndex = slides.length - 1;
     //revenir sur le dernier slide
   }
-  toggleDot();
+  const currentElement = dots.children.item(currentIndex);
+  toggleDot(previousElement, currentElement);
   switchSlide();
 });
 rightArrow.addEventListener("click", () => {
+  const previousElement = dots.children.item(currentIndex);
   currentIndex++;
   if (currentIndex > slides.length - 1) {
     currentIndex = 0;
   }
   //slide suivant avec changement d'img + text
-  toggleDot();
+  const currentElement = dots.children.item(currentIndex);
+  toggleDot(previousElement, currentElement);
   switchSlide();
 });
 slides.forEach((slide, index) => {
